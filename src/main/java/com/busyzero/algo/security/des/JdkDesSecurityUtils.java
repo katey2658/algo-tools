@@ -8,25 +8,24 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.Security;
 import java.security.spec.InvalidKeySpecException;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+
 
 /**
- * des 加密
+ * des 加密工具类
  * 
  * @author katey2658
  *
  */
-public class DesSecurityUtils {
+public class JdkDesSecurityUtils {
 	/** 默认keygen 位置 */
 	private static final String DEFAULT_KEYGEN_FILE = "keygen.text";
 
@@ -47,6 +46,7 @@ public class DesSecurityUtils {
 	 */
 	public static SecretKey generateSecretKey(String file) {
 		try {
+			Security.addProvider(new BouncyCastleProvider());
 			// 生成key
 			KeyGenerator keyGenerator = KeyGenerator.getInstance("DES");
 			// 设置长度
@@ -112,7 +112,7 @@ public class DesSecurityUtils {
 	 * @param encryptStr
 	 * @return
 	 */
-	public static String jdkDesDecrypt(final String encryptStr){
+	public static String desDecrypt(final String encryptStr){
 		return jdkDesDecrypt(encryptStr,DEFAULT_KEYGEN_FILE);
 	}
 	/**
@@ -148,7 +148,7 @@ public class DesSecurityUtils {
 	 * @param originalStr
 	 * @return
 	 */
-	public static String jdkDesEncrypt(final String originalStr, SecretKey secretKey) {
+	public static String desEncrypt(final String originalStr, SecretKey secretKey) {
 		try {
 			// 加密
 			Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
