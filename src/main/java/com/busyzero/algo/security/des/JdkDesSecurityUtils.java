@@ -11,9 +11,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.Security;
 import java.security.spec.InvalidKeySpecException;
 
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
+import javax.crypto.*;
 import javax.crypto.spec.DESKeySpec;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -41,7 +39,7 @@ public class JdkDesSecurityUtils {
 	/**
 	 * 生成密钥
 	 * 
-	 * @param path
+	 * @param file
 	 * @return
 	 */
 	public static SecretKey generateSecretKey(String file) {
@@ -130,13 +128,15 @@ public class JdkDesSecurityUtils {
 			Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
 			cipher.init(Cipher.DECRYPT_MODE, secretKey);
 			result = cipher.doFinal(encryptStr.getBytes());
-		} catch (IllegalBlockSizeException | BadPaddingException e) {
+		} catch (BadPaddingException e) {
 			e.printStackTrace();
 		} catch (InvalidKeyException e) {
 			e.printStackTrace();
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} catch (NoSuchPaddingException e) {
+			e.printStackTrace();
+		} catch (IllegalBlockSizeException e) {
 			e.printStackTrace();
 		}
 		return new String(result);

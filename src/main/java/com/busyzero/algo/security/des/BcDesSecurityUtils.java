@@ -26,7 +26,7 @@ import javax.crypto.spec.DESKeySpec;
  * @author katey2658
  *
  */
-public class bcDesSecurityUtils {
+public class BcDesSecurityUtils {
 	/** 默认keygen 位置 */
 	private static final String DEFAULT_KEYGEN_FILE = "keygen.text";
 
@@ -42,7 +42,7 @@ public class bcDesSecurityUtils {
 	/**
 	 * 生成密钥
 	 * 
-	 * @param path
+	 * @param file
 	 * @return
 	 */
 	public static SecretKey generateSecretKey(String file) {
@@ -130,13 +130,15 @@ public class bcDesSecurityUtils {
 			Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
 			cipher.init(Cipher.DECRYPT_MODE, secretKey);
 			result = cipher.doFinal(encryptStr.getBytes());
-		} catch (IllegalBlockSizeException | BadPaddingException e) {
+		} catch (BadPaddingException e) {
 			e.printStackTrace();
 		} catch (InvalidKeyException e) {
 			e.printStackTrace();
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} catch (NoSuchPaddingException e) {
+			e.printStackTrace();
+		} catch (IllegalBlockSizeException e) {
 			e.printStackTrace();
 		}
 		return new String(result);
