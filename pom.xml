@@ -24,7 +24,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<org.bouncycastle.version>1.58</org.bouncycastle.version>
+		<org.bouncycastle.version>1.67</org.bouncycastle.version>
 		<commons-codec.version>1.10</commons-codec.version>
 	</properties>
 
